@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>음잘알 PlayList</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: linear-gradient(135deg, #0c0c0c 0%, #1a1a1a 50%, #2d2d30 100%);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #e0e0e0;
+            min-height: 100vh;
+            padding: 2rem;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><radialGradient id="grain" cx="50%" cy="50%" r="50%"><stop offset="0%" style="stop-color:rgba(255,255,255,0.03)"/><stop offset="100%" style="stop-color:rgba(0,0,0,0.1)"/></radialGradient></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>') repeat;
+            pointer-events: none;
+            z-index: -1;
+            opacity: 0.3;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: rgba(20, 20, 25, 0.8);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 3rem;
+            box-shadow: 
+                0 20px 40px rgba(0, 0, 0, 0.6),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+        }
+
+        h1 {
+            font-size: 2.8rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #ff6b6b, #ffd93d, #6bcf7f, #4ecdc4, #45b7d1, #96ceb4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-align: center;
+            margin-bottom: 3rem;
+            text-shadow: 0 0 30px rgba(255, 107, 107, 0.3);
+            letter-spacing: -0.02em;
+            line-height: 1.2;
+        }
+
+        h2 {
+            font-size: 1.8rem;
+            font-weight: 600;
+            margin: 2.5rem 0 1.5rem 0;
+            color: #ffffff;
+            position: relative;
+            display: inline-block;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        h2::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, #ff6b6b, #4ecdc4);
+            border-radius: 2px;
+            box-shadow: 0 2px 10px rgba(255, 107, 107, 0.3);
+        }
+
+        h2[data-genre="pop"]::after {
+            background: linear-gradient(90deg, #ff6b6b, #ff8e53);
+        }
+
+        h2[data-genre="jpop"]::after {
+            background: linear-gradient(90deg, #ffd93d, #ff6b6b);
+        }
+
+        h2[data-genre="kpop"]::after {
+            background: linear-gradient(90deg, #4ecdc4, #45b7d1);
+        }
+
+        ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        li {
+            background: linear-gradient(135deg, rgba(40, 40, 45, 0.8), rgba(30, 30, 35, 0.6));
+            margin: 0.8rem 0;
+            padding: 1.2rem 1.8rem;
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        li::before {
+            content: '♪';
+            position: absolute;
+            left: 1.2rem;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.2rem;
+            color: #4ecdc4;
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+
+        li:hover::before {
+            opacity: 1;
+            transform: translateY(-50%) scale(1.2);
+        }
+
+        li:hover {
+            transform: translateY(-3px) scale(1.02);
+            background: linear-gradient(135deg, rgba(60, 60, 70, 0.9), rgba(45, 45, 55, 0.8));
+            border-color: rgba(255, 255, 255, 0.15);
+            box-shadow: 
+                0 15px 35px rgba(0, 0, 0, 0.4),
+                0 5px 15px rgba(76, 205, 196, 0.2),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            padding-left: 3rem;
+        }
+
+        li:hover {
+            color: #ffffff;
+        }
+
+        .song-title {
+            font-weight: 500;
+            font-size: 1.1rem;
+            color: #e8e8e8;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+            transition: color 0.3s ease;
+        }
+
+        /* Genre-specific hover colors */
+        .pop-section li:hover {
+            box-shadow: 
+                0 15px 35px rgba(0, 0, 0, 0.4),
+                0 5px 15px rgba(255, 107, 107, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+        }
+
+        .jpop-section li:hover {
+            box-shadow: 
+                0 15px 35px rgba(0, 0, 0, 0.4),
+                0 5px 15px rgba(255, 217, 61, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+        }
+
+        .kpop-section li:hover {
+            box-shadow: 
+                0 15px 35px rgba(0, 0, 0, 0.4),
+                0 5px 15px rgba(69, 183, 209, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            body {
+                padding: 1rem;
+            }
+
+            .container {
+                padding: 2rem;
+            }
+
+            h1 {
+                font-size: 2.2rem;
+                margin-bottom: 2rem;
+            }
+
+            h2 {
+                font-size: 1.4rem;
+            }
+
+            li {
+                padding: 1rem 1.5rem;
+            }
+
+            li:hover {
+                padding-left: 2.5rem;
+            }
+        }
+
+        /* Subtle animation on load */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .container {
+            animation: fadeInUp 1s ease-out;
+        }
+
+        li {
+            animation: fadeInUp 0.8s ease-out backwards;
+        }
+
+        li:nth-child(1) { animation-delay: 0.1s; }
+        li:nth-child(2) { animation-delay: 0.15s; }
+        li:nth-child(3) { animation-delay: 0.2s; }
+        li:nth-child(4) { animation-delay: 0.25s; }
+        li:nth-child(5) { animation-delay: 0.3s; }
+        li:nth-child(6) { animation-delay: 0.35s; }
+        li:nth-child(7) { animation-delay: 0.4s; }
+        li:nth-child(8) { animation-delay: 0.45s; }
+        li:nth-child(9) { animation-delay: 0.5s; }
+        li:nth-child(10) { animation-delay: 0.55s; }
+        li:nth-child(11) { animation-delay: 0.6s; }
+        li:nth-child(12) { animation-delay: 0.65s; }
+        li:nth-child(13) { animation-delay: 0.7s; }
+        li:nth-child(14) { animation-delay: 0.75s; }
+        li:nth-child(15) { animation-delay: 0.8s; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>음잘알 게시물 글쓴이를 위한 PlayList 모음</h1>
+        
+        <div class="pop-section">
+            <h2 data-genre="pop">POP Music</h2>
+            <ul>
+                <li><span class="song-title">Haha, Hi - boywithUke</span></li>
+                <li><span class="song-title">IDGAF - boywithuke</span></li>
+                <li><span class="song-title">Understand - boywithUke</span></li>
+                <li><span class="song-title">NoseDive - boywithUke</span></li>
+                <li><span class="song-title">Architect - Livingston</span></li>
+                <li><span class="song-title">Life goes on - Oliver Tree</span></li>
+                <li><span class="song-title">Need Me - Aze</span></li>
+                <li><span class="song-title">Here With Me - d4vd</span></li>
+                <li><span class="song-title">death bed (coffee for your head) - Powfu</span></li>
+                <li><span class="song-title">STAY - justin bieber</span></li>
+                <li><span class="song-title">Obsessed - Ayumu Imazu</span></li>
+                <li><span class="song-title">Goodbye My babe - Jace</span></li>
+                <li><span class="song-title">High Hopes - Panic! At The Disco</span></li>
+                <li><span class="song-title">sober Up - AJR</span></li>
+                <li><span class="song-title">alright - Kendrick Lamar</span></li>
+            </ul>
+        </div>
+
+        <div class="jpop-section">
+            <h2 data-genre="jpop">J-POP</h2>
+            <ul>
+                <li><span class="song-title">Billimillon(orchestra) - yuuri</span></li>
+                <li><span class="song-title">utatane - Leina</span></li>
+                <li><span class="song-title">晩餐歌(ばんさんか, Bansanka) - tuki</span></li>
+            </ul>
+        </div>
+
+        <div class="kpop-section">
+            <h2 data-genre="kpop">K-POP</h2>
+            <ul>
+                <li><span class="song-title">예쁜아 - 성휘</span></li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>
