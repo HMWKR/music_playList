@@ -154,6 +154,32 @@
             transition: color 0.3s ease;
         }
 
+        /* 링크 스타일 설정 - 모든 상태에서 동일한 색상 유지 */
+        a {
+            color: #e8e8e8 !important;
+            text-decoration: none !important;
+            font-weight: 500;
+            font-size: 1.1rem;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+            transition: color 0.3s ease;
+        }
+
+        a:link {
+            color: #e8e8e8 !important;
+        }
+
+        a:visited {
+            color: #e8e8e8 !important;
+        }
+
+        a:hover {
+            color: #ffffff !important;
+        }
+
+        a:active {
+            color: #e8e8e8 !important;
+        }
+
         /* Genre-specific hover colors */
         .pop-section li:hover {
             box-shadow: 
@@ -248,10 +274,10 @@
         <div class="pop-section">
             <h2 data-genre="pop">POP Music</h2>
             <ul>
-                <li><span class="song-title">Haha, Hi - boywithUke</span></li>
-                <li><span class="song-title">IDGAF - boywithuke</span></li>
-                <li><span class="song-title">Understand - boywithUke</span></li>
-                <li><span class="song-title">NoseDive - boywithUke</span></li>
+                <li><span class="song-title">Haha, Hi - BoyWithUke</span></li>
+                <li><span class="song-title">IDGAF - BoyWithUke</span></li>
+                <li><span class="song-title">Understand - BoyWithUke</span></li>
+                <li><span class="song-title">NoseDive - BoyWithUke</span></li>
                 <li><span class="song-title">Architect - Livingston</span></li>
                 <li><span class="song-title">Life goes on - Oliver Tree</span></li>
                 <li><span class="song-title">Need Me - Aze</span></li>
@@ -263,6 +289,11 @@
                 <li><span class="song-title">High Hopes - Panic! At The Disco</span></li>
                 <li><span class="song-title">sober Up - AJR</span></li>
                 <li><span class="song-title">alright - Kendrick Lamar</span></li>
+                <li><span class="song-title">either way - Arden Jones</span></li>
+                <li><span class="song-title">Sabotage - PuffHost</span></li>
+                <li><span class="song-title">What About - Blaxian</span></li>
+                <li><span class="song-title">Migraine - BoyWithUke</span></li>
+                <li><span class="song-title">Karma - Neotheater</span></li>
             </ul>
         </div>
 
@@ -279,6 +310,27 @@
             <h2 data-genre="kpop">K-POP</h2>
             <ul>
                 <li><span class="song-title">예쁜아 - 성휘</span></li>
+            </ul>
+        </div>
+        
+        <div class="2025-09-21">
+            <h2>2025-09-21</h2>
+            <ul>        
+                <li><span class="song-title"><a href="https://music.youtube.com/watch?v=twQFweYMAYU&si=9fEdj1ddd8aHyukH" target="_blank">
+                    Sabotage - PuffHost
+                </a></span></li>
+                <li><span class="song-title"><a href="https://music.youtube.com/watch?v=cv2eZ06I5Pc&si=SNrKPudY5M1OTpJv" target="_blank">
+                    either way - Arden Jones
+                </a></span></li>
+                <li><span class="song-title"><a href="https://music.youtube.com/watch?v=MQvawT1TAnU&si=h4p26dECVhEIRBmR" target="_blank">
+                    Migraine - BoyWithUke
+                </a></span></li>
+                <li><span class="song-title"><a href="https://music.youtube.com/watch?v=JTUetx-r7-8&si=O6U6sA_sdSgBZFPg" target="_blank">
+                    Karma - Neotheater
+                </a></span></li>
+                <li><span class="song-title"><a href="https://music.youtube.com/watch?v=Go8TBbRH1tg&si=D9I2zeaftUiyvmVj" target="_blank">
+                    What About - Blaxian
+                </a></span></li>
             </ul>
         </div>
     </div>
