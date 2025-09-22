@@ -96,10 +96,149 @@
             background: linear-gradient(90deg, #4ecdc4, #45b7d1);
         }
 
-        ul {
+        ul, ol {
             list-style: none;
             margin: 0;
             padding: 0;
+        }
+        
+        .alphabet-group {
+            margin: 1.5rem 0;
+            border-left: 3px solid rgba(255, 255, 255, 0.1);
+            padding-left: 1.5rem;
+            transition: all 0.3s ease;
+        }
+        
+        .alphabet-group:hover {
+            border-left-color: rgba(76, 205, 196, 0.5);
+        }
+        
+        .alphabet-header {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 0.8rem;
+            padding: 0.5rem 1rem;
+            background: linear-gradient(135deg, rgba(76, 205, 196, 0.15), rgba(76, 205, 196, 0.05));
+            border: 1px solid rgba(76, 205, 196, 0.2);
+            border-radius: 8px;
+            display: inline-block;
+            min-width: 60px;
+            text-align: center;
+            position: relative;
+            backdrop-filter: blur(10px);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+        
+        .alphabet-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.02));
+            border-radius: 7px;
+            pointer-events: none;
+        }
+        
+        /* Genre-specific alphabet headers */
+        .pop-section .alphabet-header {
+            background: linear-gradient(135deg, rgba(255, 107, 107, 0.15), rgba(255, 107, 107, 0.05));
+            border-color: rgba(255, 107, 107, 0.3);
+        }
+        
+        .jpop-section .alphabet-header {
+            background: linear-gradient(135deg, rgba(255, 217, 61, 0.15), rgba(255, 217, 61, 0.05));
+            border-color: rgba(255, 217, 61, 0.3);
+        }
+        
+        .kpop-section .alphabet-header {
+            background: linear-gradient(135deg, rgba(69, 183, 209, 0.15), rgba(69, 183, 209, 0.05));
+            border-color: rgba(69, 183, 209, 0.3);
+        }
+        
+        ol {
+            counter-reset: song-counter;
+        }
+        
+        .alphabet-group ol {
+            counter-reset: song-counter;
+        }
+        
+        .alphabet-group ol li {
+            padding-left: 3rem;
+        }
+        
+        .alphabet-group ol li:hover {
+            padding-left: 3.5rem;
+        }
+        
+        ol li {
+            counter-increment: song-counter;
+            position: relative;
+            padding-left: 3.5rem;
+        }
+        
+        ol li::before {
+            content: counter(song-counter);
+            position: absolute;
+            left: 1.2rem;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #4ecdc4;
+            width: 1.8rem;
+            height: 1.8rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(76, 205, 196, 0.15);
+            border-radius: 50%;
+            border: 1px solid rgba(76, 205, 196, 0.3);
+            transition: all 0.3s ease;
+        }
+        
+        ol li:hover::before {
+            background: rgba(76, 205, 196, 0.25);
+            border-color: rgba(76, 205, 196, 0.5);
+            transform: translateY(-50%) scale(1.1);
+        }
+        
+        /* Genre-specific counter colors */
+        .pop-section ol li::before {
+            color: #ff6b6b;
+            background: rgba(255, 107, 107, 0.15);
+            border-color: rgba(255, 107, 107, 0.3);
+        }
+        
+        .pop-section ol li:hover::before {
+            background: rgba(255, 107, 107, 0.25);
+            border-color: rgba(255, 107, 107, 0.5);
+        }
+        
+        .jpop-section ol li::before {
+            color: #ffd93d;
+            background: rgba(255, 217, 61, 0.15);
+            border-color: rgba(255, 217, 61, 0.3);
+        }
+        
+        .jpop-section ol li:hover::before {
+            background: rgba(255, 217, 61, 0.25);
+            border-color: rgba(255, 217, 61, 0.5);
+        }
+        
+        .kpop-section ol li::before {
+            color: #45b7d1;
+            background: rgba(69, 183, 209, 0.15);
+            border-color: rgba(69, 183, 209, 0.3);
+        }
+        
+        .kpop-section ol li:hover::before {
+            background: rgba(69, 183, 209, 0.25);
+            border-color: rgba(69, 183, 209, 0.5);
         }
 
         li {
@@ -126,7 +265,13 @@
             transition: all 0.3s ease;
         }
 
-        li:hover::before {
+        /* Only show music note for ul items */
+        ul li::before {
+            content: '♪';
+            opacity: 0;
+        }
+
+        ul li:hover::before {
             opacity: 1;
             transform: translateY(-50%) scale(1.2);
         }
@@ -139,7 +284,15 @@
                 0 15px 35px rgba(0, 0, 0, 0.4),
                 0 5px 15px rgba(76, 205, 196, 0.2),
                 inset 0 1px 0 rgba(255, 255, 255, 0.1);
+        }
+        
+        /* Different hover padding for ul and ol */
+        ul li:hover {
             padding-left: 3rem;
+        }
+        
+        ol li:hover {
+            padding-left: 4rem;
         }
 
         li:hover {
@@ -271,67 +424,267 @@
     <div class="container">
         <h1>음잘알 게시물 글쓴이를 위한 PlayList 모음</h1>
         
-        <div class="pop-section">
-            <h2 data-genre="pop">POP Music</h2>
-            <ul>
-                <li><span class="song-title">Haha, Hi - BoyWithUke</span></li>
-                <li><span class="song-title">IDGAF - BoyWithUke</span></li>
-                <li><span class="song-title">Understand - BoyWithUke</span></li>
-                <li><span class="song-title">NoseDive - BoyWithUke</span></li>
-                <li><span class="song-title">Architect - Livingston</span></li>
-                <li><span class="song-title">Life goes on - Oliver Tree</span></li>
-                <li><span class="song-title">Need Me - Aze</span></li>
-                <li><span class="song-title">Here With Me - d4vd</span></li>
-                <li><span class="song-title">death bed (coffee for your head) - Powfu</span></li>
-                <li><span class="song-title">STAY - justin bieber</span></li>
-                <li><span class="song-title">Obsessed - Ayumu Imazu</span></li>
-                <li><span class="song-title">Goodbye My babe - Jace</span></li>
-                <li><span class="song-title">High Hopes - Panic! At The Disco</span></li>
-                <li><span class="song-title">sober Up - AJR</span></li>
-                <li><span class="song-title">alright - Kendrick Lamar</span></li>
-                <li><span class="song-title">either way - Arden Jones</span></li>
-                <li><span class="song-title">Sabotage - PuffHost</span></li>
-                <li><span class="song-title">What About - Blaxian</span></li>
-                <li><span class="song-title">Migraine - BoyWithUke</span></li>
-                <li><span class="song-title">Karma - Neotheater</span></li>
-            </ul>
-        </div>
-
         <div class="jpop-section">
             <h2 data-genre="jpop">J-POP</h2>
-            <ul>
-                <li><span class="song-title">Billimillon(orchestra) - yuuri</span></li>
-                <li><span class="song-title">utatane - Leina</span></li>
-                <li><span class="song-title">晩餐歌(ばんさんか, Bansanka) - tuki</span></li>
-            </ul>
+            
+            <div class="alphabet-group">
+                <div class="alphabet-header">B</div>
+                <ol>
+                    <li><span class="song-title"><a href="https://music.youtube.com/watch?v=fyobo5zkqVk&si=KoS13rgmy466y7Mu" target="_blank">
+                        Billimillon(orchestra) - yuuri
+                    </a></span></li>
+                </ol>
+            </div>
+            
+            <div class="alphabet-group">
+                <div class="alphabet-header">U</div>
+                <ol start="2">
+                    <li><span class="song-title"><a href="https://music.youtube.com/watch?v=qSZWxStrC7k&si=FfBhUIiICXkrv2pC" target="_blank">
+                        utatane - Leina
+                    </a></span></li>
+                </ol>
+            </div>
+            
+            <div class="alphabet-group">
+                <div class="alphabet-header">晩</div>
+                <ol start="3">
+                    <li><span class="song-title"><a href="https://music.youtube.com/watch?v=vjn2HZK1RiQ&si=_60jGYv7MHzo8ZFn" target="_blank">
+                        晩餐歌(ばんさんか, Bansanka) - tuki
+                    </a></span></li>
+                </ol>
+            </div>
         </div>
 
         <div class="kpop-section">
             <h2 data-genre="kpop">K-POP</h2>
-            <ul>
-                <li><span class="song-title">예쁜아 - 성휘</span></li>
-            </ul>
+            
+            <div class="alphabet-group">
+                <div class="alphabet-header">예</div>
+                <ol>
+                    <li><span class="song-title"><a href="https://music.youtube.com/watch?v=vHNoolY_xfQ&si=WGbOiBL5_K25tc09" target="_blank">
+                        예쁜아 - 성휘
+                    </a></span></li>
+                </ol>
+            </div>
+        </div>
+
+        <div class="pop-section">
+            <h2 data-genre="pop">POP Music</h2>
+            
+            <div class="alphabet-group">
+                <div class="alphabet-header">A</div>
+                <ol>
+                    <li><span class="song-title"><a href="https://music.youtube.com/watch?v=67vr-3kpX3Q&si=POamYEDZeebUjmiy" target="_blank">
+                        alright - Kendrick Lamar
+                    </a></span></li>
+                    <li><span class="song-title"><a href="https://music.youtube.com/watch?v=0gF31eURPNA&si=ZpVYwu7_v1z47eJX" target="_blank">
+                        Architect - Livingston
+                    </a></span></li>
+                </ol>
+            </div>
+            
+            <div class="alphabet-group">
+                <div class="alphabet-header">D</div>
+                <ol start="3">
+                    <li><span class="song-title"><a href="https://music.youtube.com/watch?v=JApegyYlvyY&si=b_7gM9OdS1yq2ley" target="_blank">
+                        death bed (coffee for your head) - Powfu
+                    </a></span></li>
+                </ol>
+            </div>
+            
+            <div class="alphabet-group">
+                <div class="alphabet-header">E</div>
+                <ol start="4">
+                    <li><span class="song-title"><a href="https://music.youtube.com/watch?v=cv2eZ06I5Pc&si=fXUjuXfNMQ2BEi2b" target="_blank">
+                        either way - Arden Jones
+                    </a></span></li>
+                </ol>
+            </div>
+            
+            <div class="alphabet-group">
+                <div class="alphabet-header">G</div>
+                <ol start="5">
+                    <li><span class="song-title"><a href="https://music.youtube.com/watch?v=kXXGMg2sFeA&si=Ve7OyDkrxr2Hvk6s" target="_blank">
+                        Goodbye My babe - Jace
+                    </a></span></li>
+                </ol>
+            </div>
+            
+            <div class="alphabet-group">
+                <div class="alphabet-header">H</div>
+                <ol start="6">
+                    <li><span class="song-title"><a href="https://music.youtube.com/watch?v=fkzLQ5MU-ic&si=gkQhAkZS9zhOT7wG" target="_blank">
+                        Haha, Hi - BoyWithUke
+                    </a></span></li>
+                    <li><span class="song-title"><a href="https://music.youtube.com/watch?v=fwU5Mh-CaOE&si=4eWJ7Ww421wFVvFN" target="_blank">
+                        Here With Me - d4vd
+                    </a></span></li>
+                    <li><span class="song-title"><a href="https://music.youtube.com/watch?v=GJY8OMJXRAk&si=d1HI8gyxZjYg8NFq" target="_blank">
+                        High Hopes - Panic! At The Disco
+                    </a></span></li>
+                </ol>
+            </div>
+            
+            <div class="alphabet-group">
+                <div class="alphabet-header">I</div>
+                <ol start="9">
+                    <li><span class="song-title"><a href="https://music.youtube.com/watch?v=8zQTocXEvQA&si=n_SkC0y1cjBm--_H" target="_blank">
+                        IDGAF - BoyWithUke
+                    </a></span></li>
+                </ol>
+            </div>
+            
+            <div class="alphabet-group">
+                <div class="alphabet-header">K</div>
+                <ol start="10">
+                    <li><span class="song-title"><a href="https://music.youtube.com/watch?v=JTUetx-r7-8&si=O6U6sA_sdSgBZFPg" target="_blank">
+                        Karma - Neotheater
+                    </a></span></li>
+                </ol>
+            </div>
+            
+            <div class="alphabet-group">
+                <div class="alphabet-header">L</div>
+                <ol start="11">
+                    <li><span class="song-title"><a href="https://music.youtube.com/watch?v=mzhbRUniU4U&si=WsSE3OL86Qg90FUM" target="_blank">
+                        Life goes on - Oliver Tree
+                    </a></span></li>
+                </ol>
+            </div>
+            
+            <div class="alphabet-group">
+                <div class="alphabet-header">M</div>
+                <ol start="12">
+                    <li><span class="song-title"><a href="https://music.youtube.com/watch?v=MQvawT1TAnU&si=h4p26dECVhEIRBmR" target="_blank">
+                        Migraine - BoyWithUke
+                    </a></span></li>
+                </ol>
+            </div>
+            
+            <div class="alphabet-group">
+                <div class="alphabet-header">N</div>
+                <ol start="13">
+                    <li><span class="song-title"><a href="https://music.youtube.com/watch?v=74foSfw6Jb0&si=HlLYoqEfazYs_hOV" target="_blank">
+                        Need Me - Aze
+                    </a></span></li>
+                    <li><span class="song-title"><a href="https://music.youtube.com/watch?v=X5DcsYsBgPo&si=65y0EFGkgMLjfDQs" target="_blank">
+                        NoseDive - BoyWithUke
+                    </a></span></li>
+                </ol>
+            </div>
+            
+            <div class="alphabet-group">
+                <div class="alphabet-header">O</div>
+                <ol start="15">
+                    <li><span class="song-title"><a href="https://music.youtube.com/watch?v=UuJb0hluTt0&si=Ywk3cni6qe8Bwnsn" target="_blank">
+                        Obsessed - Ayumu Imazu
+                    </a></span></li>
+                </ol>
+            </div>
+            
+            <div class="alphabet-group">
+                <div class="alphabet-header">S</div>
+                <ol start="16">
+                    <li><span class="song-title"><a href="https://music.youtube.com/watch?v=twQFweYMAYU&si=9fEdj1ddd8aHyukH" target="_blank">
+                        Sabotage - PuffHost
+                    </a></span></li>
+                    <li><span class="song-title"><a href="https://music.youtube.com/watch?v=YTCS9_kWYew&si=gXq_pla6l1FBrc59" target="_blank">
+                        sober Up - AJR
+                    </a></span></li>
+                    <li><span class="song-title"><a href="https://music.youtube.com/watch?v=XfEMj-z3TtA&si=IlZngxls5Wybkmq1" target="_blank">
+                        STAY - justin bieber
+                    </a></span></li>
+                </ol>
+            </div>
+            
+            <div class="alphabet-group">
+                <div class="alphabet-header">U</div>
+                <ol start="19">
+                    <li><span class="song-title"><a href="https://music.youtube.com/watch?v=euD9Mr2M7Mw&si=I-0ytDSv53zGWv1C" target="_blank">
+                        Understand - BoyWithUke
+                    </a></span></li>
+                </ol>
+            </div>
+            
+            <div class="alphabet-group">
+                <div class="alphabet-header">W</div>
+                <ol start="20">
+                    <li><span class="song-title"><a href="https://music.youtube.com/watch?v=Go8TBbRH1tg&si=D9I2zeaftUiyvmVj" target="_blank">
+                        What About - Blaxian
+                    </a></span></li>
+                </ol>
+            </div>
         </div>
         
         <div class="2025-09-21">
             <h2>2025-09-21</h2>
-            <ul>        
-                <li><span class="song-title"><a href="https://music.youtube.com/watch?v=twQFweYMAYU&si=9fEdj1ddd8aHyukH" target="_blank">
-                    Sabotage - PuffHost
-                </a></span></li>
-                <li><span class="song-title"><a href="https://music.youtube.com/watch?v=cv2eZ06I5Pc&si=SNrKPudY5M1OTpJv" target="_blank">
-                    either way - Arden Jones
-                </a></span></li>
-                <li><span class="song-title"><a href="https://music.youtube.com/watch?v=MQvawT1TAnU&si=h4p26dECVhEIRBmR" target="_blank">
-                    Migraine - BoyWithUke
-                </a></span></li>
-                <li><span class="song-title"><a href="https://music.youtube.com/watch?v=JTUetx-r7-8&si=O6U6sA_sdSgBZFPg" target="_blank">
-                    Karma - Neotheater
-                </a></span></li>
-                <li><span class="song-title"><a href="https://music.youtube.com/watch?v=Go8TBbRH1tg&si=D9I2zeaftUiyvmVj" target="_blank">
-                    What About - Blaxian
-                </a></span></li>
-            </ul>
+            
+            <div class="alphabet-group">
+                <div class="alphabet-header">E</div>
+                <ol>
+                    <li><span class="song-title"><a href="https://music.youtube.com/watch?v=cv2eZ06I5Pc&si=SNrKPudY5M1OTpJv" target="_blank">
+                        either way - Arden Jones
+                    </a></span></li>
+                </ol>
+            </div>
+            
+            <div class="alphabet-group">
+                <div class="alphabet-header">K</div>
+                <ol start="2">
+                    <li><span class="song-title"><a href="https://music.youtube.com/watch?v=JTUetx-r7-8&si=O6U6sA_sdSgBZFPg" target="_blank">
+                        Karma - Neotheater
+                    </a></span></li>
+                </ol>
+            </div>
+            
+            <div class="alphabet-group">
+                <div class="alphabet-header">M</div>
+                <ol start="3">
+                    <li><span class="song-title"><a href="https://music.youtube.com/watch?v=MQvawT1TAnU&si=h4p26dECVhEIRBmR" target="_blank">
+                        Migraine - BoyWithUke
+                    </a></span></li>
+                </ol>
+            </div>
+            
+            <div class="alphabet-group">
+                <div class="alphabet-header">S</div>
+                <ol start="4">
+                    <li><span class="song-title"><a href="https://music.youtube.com/watch?v=twQFweYMAYU&si=9fEdj1ddd8aHyukH" target="_blank">
+                        Sabotage - PuffHost
+                    </a></span></li>
+                </ol>
+            </div>
+            
+            <div class="alphabet-group">
+                <div class="alphabet-header">W</div>
+                <ol start="5">
+                    <li><span class="song-title"><a href="https://music.youtube.com/watch?v=Go8TBbRH1tg&si=D9I2zeaftUiyvmVj" target="_blank">
+                        What About - Blaxian
+                    </a></span></li>
+                </ol>
+            </div>
+        </div>
+
+        <div class="2025-09-22">
+            <h2>2025-09-22</h2>
+            
+            <div class="alphabet-group">
+                <div class="alphabet-header">M</div>
+                <ol>
+                    <li><span class="song-title"><a href="https://music.youtube.com/watch?v=p-014jHwYP4&si=0A5xTtLkb8MYauAe" target="_blank">
+                        Mama Said - Lukas Graham
+                    </a></span></li>
+                </ol>
+            </div>
+            
+            <div class="alphabet-group">
+                <div class="alphabet-header">T</div>
+                <ol start="2">
+                    <li><span class="song-title"><a href="https://music.youtube.com/watch?v=gPfmCw3UveY&si=OoT9mBYcJHTvSlgm" target="_blank">
+                        Television/ So Far So Good - Rex Orange County • Apricot Princess
+                    </a></span></li>
+                </ol>
+            </div>
         </div>
     </div>
 </body>
